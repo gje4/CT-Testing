@@ -1,0 +1,18 @@
+[build]
+  command = "yarn build"
+  publish = "dist"
+
+[template.environment]
+  VUE_APP_CT_PROJECT_KEY = "allbats"
+  VUE_APP_CT_CLIENT_ID = "DRVRN7-oROGbkCexxXPpYWIY"
+  VUE_APP_CT_CLIENT_SECRET = "f7Ez7KyieOvZOhBf_Hc0b9GXrQ5Jutqp"
+  VUE_APP_CT_SCOPE = "manage_my_shopping_lists:allbats view_api_clients:allbats view_products:allbats manage_my_payments:allbats manage_my_profile:allbats view_types:allbats create_anonymous_token:allbats introspect_oauth_tokens:allbats view_published_products:allbats manage_my_orders:allbats manage_api_clients:allbats"
+  VUE_APP_CT_AUTH_HOST = "https://auth.us-central1.gcp.commercetools.com"
+  VUE_APP_CT_API_HOST = "https://auth.us-central1.gcp.commercetools.com"
+  YARN_FLAGS = "--no-ignore-optional"
+
+# Rule for router history mode
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

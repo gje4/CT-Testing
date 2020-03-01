@@ -17,7 +17,7 @@ Vue.use(VueApollo);
 
 function createClient() {
   console.log("client ID", process.env.VUE_APP_CT_CLIENT_ID);
-  console.log("env", process.env.VUE_APP_CT_CLIENT_SECRET);
+  console.log("client Secret", process.env.VUE_APP_CT_CLIENT_SECRET);
 
   const authLink = setContext((_, { headers = {} }) =>
     getAuthToken().then(authorization => ({

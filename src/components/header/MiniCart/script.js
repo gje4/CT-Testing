@@ -1,44 +1,44 @@
-import Vue from 'vue';
-import gql from 'graphql-tag';
-import VuePerfectScrollbar from 'vue-perfect-scrollbar';
-import cartMixin from '../../../mixins/cartMixin';
-import productMixin from '../../../mixins/productMixin';
-import BaseMoney from '../../common/BaseMoney/index.vue';
-import LineItemInfo from '../../common/cartlike/LineItemInfo/index.vue';
-import LineItemDeleteForm from '../../cartdetail/LineItemDeleteForm/index.vue';
-import MONEY_FRAGMENT from '../../Money.gql';
-import { locale } from '../../common/shared';
+import Vue from "vue";
+import gql from "graphql-tag";
+import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import cartMixin from "../../../mixins/cartMixin";
+import productMixin from "../../../mixins/productMixin";
+import BaseMoney from "../../common/BaseMoney/index.vue";
+import LineItemInfo from "../../common/cartlike/LineItemInfo/index.vue";
+import LineItemDeleteForm from "../../cartdetail/LineItemDeleteForm/index.vue";
+import MONEY_FRAGMENT from "../../Money.gql";
+import { locale } from "../../common/shared";
 
 export default {
   components: {
     LineItemDeleteForm,
     LineItemInfo,
     BaseMoney,
-    VuePerfectScrollbar,
+    VuePerfectScrollbar
   },
   mixins: [cartMixin, productMixin],
   data: () => ({
-    me: null,
+    me: null
   }),
   computed: {
     show() {
       return this.$store.state.miniCartOpen;
-    },
+    }
   },
   methods: {
     open() {
-      this.$store.dispatch('openMiniCart', 0);
+      this.$store.dispatch("openMiniCart", 0);
     },
     close() {
-      this.$store.dispatch('closeMiniCart', 300);
-    },
+      this.$store.dispatch("closeMiniCart", 300);
+    }
   },
   watch: {
     show(newValue, oldValue) {
       if (newValue && !oldValue) {
-        Vue.nextTick(() => $('.nav-minicart section').scrollTop(0));
+        Vue.nextTick(() => $(".nav-minicart section").scrollTop(0));
       }
-    },
+    }
   },
   apollo: {
     me: {
@@ -68,12 +68,13 @@ export default {
             }
           }
         }
-        ${MONEY_FRAGMENT}`,
+        ${MONEY_FRAGMENT}
+      `,
       variables() {
         return {
-          locale: locale(this),
+          locale: "EN-US"
         };
-      },
-    },
-  },
+      }
+    }
+  }
 };

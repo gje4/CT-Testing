@@ -16,7 +16,8 @@ import introspectionQueryResultData from "../graphql-fragments.json";
 Vue.use(VueApollo);
 
 function createClient() {
-  console.log("env", process.env.VUE_APP_CT_CLIENT_ID);
+  console.log("client ID", process.env.VUE_APP_CT_CLIENT_ID);
+  console.log("env", process.env.VUE_APP_CT_CLIENT_SECRET);
 
   const authLink = setContext((_, { headers = {} }) =>
     getAuthToken().then(authorization => ({

@@ -31,7 +31,7 @@ export default {
       variables() {
         return {
           id: this.$route.params.id,
-          locale: locale("EN-US")
+          locale: "EN-US"
         };
       }
     }

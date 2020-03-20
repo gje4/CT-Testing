@@ -14,9 +14,11 @@ const SET_MINI_CART_OPEN = "SET_MINI_CART_OPEN";
 
 const availableLocales = Object.keys(sunriseConfig.languages);
 const availableCountries = Object.keys(sunriseConfig.countries);
-
+console.log("availableCountries", Object.keys(sunriseConfig.countries));
 export const fallbackLocale = availableLocales[0];
 const fallbackCountry = availableCountries[0];
+console.log("fallbackCountry", fallbackCountry);
+
 const obtainCurrency = country =>
   sunriseConfig.formats.number[country]?.currency?.currency;
 
@@ -53,14 +55,13 @@ export default new Vuex.Store({
 
   actions: {
     setLocale: ({ commit }, locale) => {
-      if (availableLocales.includes(locale)) commit(SET_LOCALE, "EN-US");
+      commit(SET_COUNTRY, "EN-US");
     },
 
     setCountry: ({ commit }, country) => {
-      if (availableCountries.includes(country)) {
-        commit(SET_COUNTRY, country);
-        commit(SET_CURRENCY, obtainCurrency(country));
-      }
+      console.log("set currenc");
+      commit(SET_COUNTRY, "US");
+      commit(SET_CURRENCY, "USD");
     },
 
     setAuthenticated: ({ commit }, authenticated) =>
@@ -93,11 +94,11 @@ export default new Vuex.Store({
 
   mutations: {
     [SET_COUNTRY](state, country) {
-      state.country = country;
+      state.country = "US";
     },
 
     [SET_CURRENCY](state, currency) {
-      state.currency = currency;
+      state.currency = "USD";
     },
 
     [SET_LOCALE](state, locale) {

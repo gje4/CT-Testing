@@ -71,9 +71,9 @@ export default {
       variables() {
         return {
           locale: "EN-US",
-          currency: this.$store.state.currency,
+          currency: "USD",
           sku: this.sku,
-          country: this.$store.state.country
+          country: "US"
         };
       }
     }

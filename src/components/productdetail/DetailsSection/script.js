@@ -49,12 +49,7 @@ export default {
               current {
                 variant(sku: $sku) {
                   attributes {
-                    ... on mainProductType {
-                      designer {
-                        label
-                        key
-                        name
-                      }
+                    ... on ProductType {
                       colorFreeDefinition {
                         value(locale: $locale)
                         name
@@ -116,7 +111,7 @@ export default {
       },
       variables() {
         return {
-          locale: this.$i18n.locale,
+          locale: "EN-US",
           type: "main"
         };
       }

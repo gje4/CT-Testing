@@ -18,7 +18,10 @@ const getProducts = component => {
   }
   component.loadingProducts = true;
   const route = component.$route;
-  const { currency, country } = component.$store.state;
+  const country = component.$store.state;
+  const currency = "USD";
+
+  console.log("currency", currency);
   const loc = locale(component);
   const sortValue = route.query.sort;
   const searchText = route.query.q ? { [`text.${loc}`]: route.query.q } : {};

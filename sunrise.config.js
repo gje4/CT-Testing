@@ -20,22 +20,13 @@ export default {
     api: process.env.VUE_APP_CT_API_HOST || "https://api.sphere.io"
   },
   languages: {
-    en: "English",
-    de: "Deutsch"
+    en: "English"
   },
   countries: {
-    DE: "Deutschland",
     US: "United States"
   },
   formats: {
     number: {
-      DE: {
-        currency: {
-          style: "currency",
-          currency: "EUR",
-          currencyDisplay: "symbol"
-        }
-      },
       US: {
         currency: {
           style: "currency",
@@ -45,13 +36,6 @@ export default {
     },
     datetime: {
       US: {
-        short: {
-          year: "numeric",
-          month: "short",
-          day: "numeric"
-        }
-      },
-      DE: {
         short: {
           year: "numeric",
           month: "short",

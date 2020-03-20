@@ -1,32 +1,31 @@
 /* eslint-disable no-param-reassign */
-import gql from "graphql-tag";
-import LoadingSpinner from "../../common/LoadingSpinner/index.vue";
-import ProductThumbnail from "../../common/ProductThumbnail/index.vue";
-import ProductSortSelector from "../ProductSortSelector/index.vue";
-import Pagination from "../../common/Pagination/index.vue";
-import { products, onlyLastRequestedPromise } from "../../../api";
-import { toPrice, pushPage, locale } from "../../common/shared";
+import gql from 'graphql-tag';
+import LoadingSpinner from '../../common/LoadingSpinner/index.vue';
+import ProductThumbnail from '../../common/ProductThumbnail/index.vue';
+import ProductSortSelector from '../ProductSortSelector/index.vue';
+import Pagination from '../../common/Pagination/index.vue';
+import { products, onlyLastRequestedPromise } from '../../../api';
+import { toPrice, pushPage, locale } from '../../common/shared';
 
-const last = onlyLastRequestedPromise("products");
-const getProducts = component => {
-  const category =
-    component.$route.params.categorySlug === "all"
-      ? undefined
-      : component.categories?.results[0]?.id;
-  if (!category && component.$route.params.categorySlug !== "all") {
+const last = onlyLastRequestedPromise('products');
+const getProducts = (component) => {
+  const category = component.$route.params.categorySlug === 'all'
+    ? undefined
+    : component.categories?.results[0]?.id;
+  if (!category && component.$route.params.categorySlug !== 'all') {
     return;
   }
   component.loadingProducts = true;
   const route = component.$route;
   const country = component.$store.state;
-  const currency = "USD";
+  const currency = 'USD';
 
-  console.log("currency", currency);
+  console.log('currency', currency);
   const loc = locale(component);
   const sortValue = route.query.sort;
   const searchText = route.query.q ? { [`text.${loc}`]: route.query.q } : {};
   const sort = sortValue
-    ? { sort: `lastModifiedAt ${sortValue === "newest" ? "desc" : "asc"}` }
+    ? { sort: `lastModifiedAt ${sortValue === 'newest' ? 'desc' : 'asc'}` }
     : {};
   last(
     products.get({
@@ -34,13 +33,15 @@ const getProducts = component => {
       page: Number(route.params?.page || 1),
       pageSize: component.limit,
       ...sort,
-      ...searchText
-    })
+      ...searchText,
+    }),
   ).then(({ results, ...meta }) => {
     component.products = {
       ...meta,
       results: results.map(
-        ({ id, masterVariant: { sku, images, prices }, name, slug }) => ({
+        ({
+          id, masterVariant: { sku, images, prices }, name, slug,
+        }) => ({
           id,
           masterData: {
             current: {
@@ -51,32 +52,32 @@ const getProducts = component => {
                 images,
                 price: toPrice(prices, {
                   country,
-                  currency
+                  currency,
                   // @todo: what about customerGroup and channel
-                })
-              }
-            }
-          }
-        })
-      )
+                }),
+              },
+            },
+          },
+        }),
+      ),
     };
     component.loadingProducts = false;
   });
 };
 export default {
-  props: ["categorySlug", "page"],
+  props: ['categorySlug', 'page'],
   components: {
     LoadingSpinner,
     ProductThumbnail,
     ProductSortSelector,
-    Pagination
+    Pagination,
   },
   data: () => ({
     categories: null,
     products: null,
     sort: null,
     limit: Number(process.env.VUE_APP_PAGE_SIZE || 75),
-    loadingProducts: false
+    loadingProducts: false,
   }),
   computed: {
     category() {
@@ -93,20 +94,19 @@ export default {
     },
     isLoading() {
       return this.loadingProducts || this.$apollo.loading;
-    }
+    },
   },
   methods: {
     changeSort(sort) {
       this.sort = sort;
     },
     changePage(page) {
-      pushPage(page, this, "products");
+      pushPage(page, this, 'products');
     },
     showScroll(el) {
       // eslint-disable-next-line no-param-reassign
-      el.style.display =
-        window.innerHeight > 300 && window.scrollY > 200 ? "" : "none";
-    }
+      el.style.display = window.innerHeight > 300 && window.scrollY > 200 ? '' : 'none';
+    },
   },
   apollo: {
     categories: {
@@ -121,11 +121,11 @@ export default {
       `,
       variables() {
         return {
-          where: `slug(EN-US="${this.categorySlug}")`
+          where: `slug(EN-US="${this.categorySlug}")`,
         };
       },
-      skip: vm => !vm.categorySlug
-    }
+      skip: vm => !vm.categorySlug,
+    },
   },
   watch: {
     $route() {
@@ -133,6 +133,6 @@ export default {
     },
     categories() {
       getProducts(this);
-    }
-  }
+    },
+  },
 };

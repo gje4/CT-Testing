@@ -1,18 +1,18 @@
-import gql from "graphql-tag";
-import BaseDate from "../../../common/BaseDate/index.vue";
-import CartLikeSummary from "../../../common/cartlike/CartLikeSummary/index.vue";
-import ORDER_FRAGMENT from "../../../Order.gql";
-import ADDRESS_FRAGMENT from "../../../Address.gql";
-import MONEY_FRAGMENT from "../../../Money.gql";
-import { locale } from "../../../common/shared";
+import gql from 'graphql-tag';
+import BaseDate from '../../../common/BaseDate/index.vue';
+import CartLikeSummary from '../../../common/cartlike/CartLikeSummary/index.vue';
+import ORDER_FRAGMENT from '../../../Order.gql';
+import ADDRESS_FRAGMENT from '../../../Address.gql';
+import MONEY_FRAGMENT from '../../../Money.gql';
+import { locale } from '../../../common/shared';
 
 export default {
   components: {
     CartLikeSummary,
-    BaseDate
+    BaseDate,
   },
   data: () => ({
-    me: null
+    me: null,
   }),
   apollo: {
     me: {
@@ -31,9 +31,9 @@ export default {
       variables() {
         return {
           id: this.$route.params.id,
-          locale: "EN-US"
+          locale: 'EN-US',
         };
-      }
-    }
-  }
+      },
+    },
+  },
 };

@@ -1,7 +1,7 @@
 en:
-  title: "Unique style for every season"
+  title: "Testing Deploy"
   subtitle: "Fashion styles"
-  linkLabel: "Shop collection"
+  linkLabel: "Shop"
 de:
   title: "Einzigartige Stücke für jede Saison"
   subtitle: "Lassen Sie sich inspirieren"

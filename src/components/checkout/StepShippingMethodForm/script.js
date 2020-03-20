@@ -1,13 +1,13 @@
-import gql from "graphql-tag";
-import { required } from "vuelidate/lib/validators";
-import cartMixin from "../../../mixins/cartMixin";
-import BaseRadio from "../../common/form/BaseRadio/index.vue";
-import BaseMoney from "../../common/BaseMoney/index.vue";
-import BaseForm from "../../common/form/BaseForm/index.vue";
-import BaseLabel from "../../common/form/BaseLabel/index.vue";
-import ServerError from "../../common/form/ServerError/index.vue";
-import CheckoutNavigation from "../CheckoutNavigation/index.vue";
-import MONEY_FRAGMENT from "../../Money.gql";
+import gql from 'graphql-tag';
+import { required } from 'vuelidate/lib/validators';
+import cartMixin from '../../../mixins/cartMixin';
+import BaseRadio from '../../common/form/BaseRadio/index.vue';
+import BaseMoney from '../../common/BaseMoney/index.vue';
+import BaseForm from '../../common/form/BaseForm/index.vue';
+import BaseLabel from '../../common/form/BaseLabel/index.vue';
+import ServerError from '../../common/form/ServerError/index.vue';
+import CheckoutNavigation from '../CheckoutNavigation/index.vue';
+import MONEY_FRAGMENT from '../../Money.gql';
 
 export default {
   components: {
@@ -16,14 +16,14 @@ export default {
     ServerError,
     BaseForm,
     BaseMoney,
-    BaseRadio
+    BaseRadio,
   },
   mixins: [cartMixin],
   data: () => ({
     me: null,
     form: {
-      shippingMethod: null
-    }
+      shippingMethod: null,
+    },
   }),
   methods: {
     price(shippingMethod) {
@@ -32,13 +32,11 @@ export default {
     },
     matchingShippingRate(shippingMethod) {
       return this.matchingZoneRate(shippingMethod).shippingRates.find(
-        shippingRate => shippingRate.isMatching
+        shippingRate => shippingRate.isMatching,
       );
     },
     matchingZoneRate(shippingMethod) {
-      return shippingMethod.zoneRates.find(zoneRate =>
-        zoneRate.shippingRates.some(shippingRate => shippingRate.isMatching)
-      );
+      return shippingMethod.zoneRates.find(zoneRate => zoneRate.shippingRates.some(shippingRate => shippingRate.isMatching));
     },
     isFree(shippingRate) {
       const totalPrice = this.me.activeCart.totalPrice.centAmount;
@@ -49,29 +47,27 @@ export default {
         {
           setShippingMethod: {
             shippingMethod: {
-              typeId: "shipping-method",
-              id: this.form.shippingMethod
-            }
-          }
-        }
-      ]).then(() => this.$router.push({ name: "checkout-payment-method" }));
+              typeId: 'shipping-method',
+              id: this.form.shippingMethod,
+            },
+          },
+        },
+      ]).then(() => this.$router.push({ name: 'checkout-payment-method' }));
     },
     goToBilling() {
-      this.$router.push({ name: "checkout-billing-address" });
-    }
+      this.$router.push({ name: 'checkout-billing-address' });
+    },
   },
   watch: {
     me(value) {
-      this.form.shippingMethod =
-        value?.activeCart?.shippingInfo?.shippingMethod?.id;
+      this.form.shippingMethod = value?.activeCart?.shippingInfo?.shippingMethod?.id;
     },
     shippingMethodsByLocation(value) {
       if (!this.form.shippingMethod) {
-        this.form.shippingMethod =
-          value.find(shippingMethod => shippingMethod.isDefault)?.id ||
-          value[0]?.id;
+        this.form.shippingMethod = value.find(shippingMethod => shippingMethod.isDefault)?.id
+          || value[0]?.id;
       }
-    }
+    },
   },
   apollo: {
     me: {
@@ -97,7 +93,7 @@ export default {
             }
           }
         }
-      `
+      `,
     },
     shippingMethodsByLocation: {
       query: gql`
@@ -132,18 +128,18 @@ export default {
       `,
       variables() {
         return {
-          currency: "USD",
-          ...this.me.activeCart.shippingAddress
+          currency: 'USD',
+          ...this.me.activeCart.shippingAddress,
         };
       },
       skip() {
         return !this.cartExists;
-      }
-    }
+      },
+    },
   },
   validations: {
     form: {
-      shippingMethod: { required }
-    }
-  }
+      shippingMethod: { required },
+    },
+  },
 };

@@ -1,19 +1,19 @@
-import gql from "graphql-tag";
-import productMixin from "../../../mixins/productMixin";
-import ProductGallery from "../ProductGallery/index.vue";
-import SocialMediaLinks from "../SocialMediaLinks/index.vue";
-import DetailsSection from "../DetailsSection/index.vue";
-import AddToCartForm from "../AddToCartForm/index.vue";
-import BasePrice from "../../common/BasePrice/index.vue";
-import VariantSelector from "../VariantSelector/index.vue";
-import { locale } from "../../common/shared";
+import gql from 'graphql-tag';
+import productMixin from '../../../mixins/productMixin';
+import ProductGallery from '../ProductGallery/index.vue';
+import SocialMediaLinks from '../SocialMediaLinks/index.vue';
+import DetailsSection from '../DetailsSection/index.vue';
+import AddToCartForm from '../AddToCartForm/index.vue';
+import BasePrice from '../../common/BasePrice/index.vue';
+import VariantSelector from '../VariantSelector/index.vue';
+import { locale } from '../../common/shared';
 
 export default {
   props: {
     sku: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
     DetailsSection,
@@ -21,16 +21,16 @@ export default {
     SocialMediaLinks,
     AddToCartForm,
     BasePrice,
-    VariantSelector
+    VariantSelector,
   },
   mixins: [productMixin],
   data: () => ({
-    product: null
+    product: null,
   }),
   computed: {
     matchingVariant() {
       return this.currentProduct.variant || {};
-    }
+    },
   },
   apollo: {
     product: {
@@ -70,12 +70,12 @@ export default {
       `,
       variables() {
         return {
-          locale: "EN-US",
-          currency: "USD",
+          locale: 'EN-US',
+          currency: 'USD',
           sku: this.sku,
-          country: "US"
+          country: 'US',
         };
-      }
-    }
-  }
+      },
+    },
+  },
 };

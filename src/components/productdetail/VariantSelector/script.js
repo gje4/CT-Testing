@@ -1,57 +1,53 @@
-import gql from "graphql-tag";
-import flatMap from "lodash.flatmap";
-import AttributeSelect from "../AttributeSelect/index.vue";
+import gql from 'graphql-tag';
+import flatMap from 'lodash.flatmap';
+import AttributeSelect from '../AttributeSelect/index.vue';
 
 export default {
   components: { AttributeSelect },
   props: {
     sku: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
     product: null,
-    attributeTranslation: null
+    attributeTranslation: null,
   }),
   methods: {
     groupValuesByAttribute(acc, currentItem) {
-      const key =
-        this.attributeTranslation?.get(currentItem.name) || currentItem.name;
+      const key = this.attributeTranslation?.get(currentItem.name) || currentItem.name;
       if (!acc[key]) {
         acc[key] = {
           name: currentItem.name,
-          values: []
+          values: [],
         };
       }
       acc[key].values.push(currentItem.value || currentItem.label);
       return acc;
-    }
+    },
   },
   computed: {
     attributes() {
       const { allVariants } = this.product.masterData.current;
-      return flatMap(allVariants, variant =>
-        Object.values(variant.attributes).filter(
-          attr => typeof attr === "object"
-        )
-      ).reduce(this.groupValuesByAttribute, {});
+      return flatMap(allVariants, variant => Object.values(variant.attributes).filter(
+        attr => typeof attr === 'object',
+      )).reduce(this.groupValuesByAttribute, {});
     },
     selected() {
       return this.variantCombinations.find(variant => variant.sku === this.sku);
     },
     variantCombinations() {
-      return this.product.masterData.current.allVariants.map(variant => {
+      return this.product.masterData.current.allVariants.map((variant) => {
         const attrs = variant.attributes;
         const combi = { sku: variant.sku };
         delete attrs.__typename;
-        Object.keys(attrs).forEach(key => {
-          combi[key] =
-            variant.attributes[key].label || variant.attributes[key].value;
+        Object.keys(attrs).forEach((key) => {
+          combi[key] = variant.attributes[key].label || variant.attributes[key].value;
         });
         return combi;
       });
-    }
+    },
   },
   apollo: {
     product: {
@@ -99,10 +95,10 @@ export default {
       `,
       variables() {
         return {
-          locale: "EN-US",
-          sku: this.sku
+          locale: 'EN-US',
+          sku: this.sku,
         };
-      }
+      },
     },
     attributeName: {
       query: gql`
@@ -122,16 +118,16 @@ export default {
         if (!loading) {
           this.attributeTranslation = data.productType.attributeDefinitions.results.reduce(
             (result, item) => result.set(item.name, item.label),
-            new Map()
+            new Map(),
           );
         }
       },
       variables() {
         return {
           locale: this.$i18n.locale,
-          type: "main"
+          type: 'main',
         };
-      }
-    }
-  }
+      },
+    },
+  },
 };

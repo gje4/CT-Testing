@@ -1,13 +1,13 @@
-import SelectBoxIt from "../../common/form/SelectBoxIt/index.vue";
-import { locale } from "../../common/shared";
+import SelectBoxIt from '../../common/form/SelectBoxIt/index.vue';
+import { locale } from '../../common/shared';
 
 export default {
   components: {
-    SelectBoxIt
+    SelectBoxIt,
   },
   data: () => ({
     show: false,
-    closeTimer: null
+    closeTimer: null,
   }),
   computed: {
     country: {
@@ -15,23 +15,23 @@ export default {
         return this.$store.state.country;
       },
       set(value) {
-        this.$store.dispatch("setCountry", value);
-      }
+        this.$store.dispatch('setCountry', value);
+      },
     },
     language: {
       get() {
         return locale(this);
       },
       set(value) {
-        this.$store.dispatch("setLocale", value);
+        this.$store.dispatch('setLocale', value);
         this.$router.replace({
           ...this.$route,
           params: {
             ...this.$route.params,
-            locale: value
-          }
+            locale: value,
+          },
         });
-      }
+      },
     },
     languages() {
       const configLangs = this.$sunrise.languages;
@@ -40,12 +40,12 @@ export default {
     },
     countries() {
       const configCountries = this.$sunrise.countries;
-      console.log("configCountries", configCountries);
+      console.log('configCountries', configCountries);
       const countries = configCountries ? Object.entries(configCountries) : [];
-      console.log("countries 11", countries);
+      console.log('countries 11', countries);
 
       return countries.map(([id, name]) => ({ id, name }));
-    }
+    },
   },
   methods: {
     toggle() {
@@ -58,6 +58,6 @@ export default {
     },
     close() {
       clearTimeout(this.closeTimer);
-    }
-  }
+    },
+  },
 };

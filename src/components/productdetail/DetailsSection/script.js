@@ -1,16 +1,16 @@
-import gql from "graphql-tag";
-import { locale } from "../../common/shared";
+import gql from 'graphql-tag';
+import { locale } from '../../common/shared';
 
 export default {
   props: {
     sku: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
     product: null,
-    attributeTranslation: null
+    attributeTranslation: null,
   }),
   computed: {
     productAttributes() {
@@ -20,24 +20,24 @@ export default {
         .filter(attribute => attribute)
         .map(a => ({
           ...a,
-          name: this.attributeTranslation?.get(a.name) || a.name
+          name: this.attributeTranslation?.get(a.name) || a.name,
         }));
-    }
+    },
   },
   methods: {
     openAccordion(e) {
-      const contextPanelGroup = $(".pdp-accord-toggle").parents(
-        ".panel-group-pdp"
+      const contextPanelGroup = $('.pdp-accord-toggle').parents(
+        '.panel-group-pdp',
       );
-      const contextPanel = $(e.target).parents(".panel-default");
-      const contextButton = $(".accordion-plus", contextPanel);
-      contextButton.toggleClass("accordion-minus");
+      const contextPanel = $(e.target).parents('.panel-default');
+      const contextButton = $('.accordion-plus', contextPanel);
+      contextButton.toggleClass('accordion-minus');
       // Remove minus class on all other buttons
       contextPanelGroup
-        .find(".accordion-plus")
+        .find('.accordion-plus')
         .not(contextButton)
-        .removeClass("accordion-minus");
-    }
+        .removeClass('accordion-minus');
+    },
   },
   apollo: {
     product: {
@@ -82,10 +82,10 @@ export default {
       `,
       variables() {
         return {
-          locale: "EN-US",
-          sku: this.sku
+          locale: 'EN-US',
+          sku: this.sku,
         };
-      }
+      },
     },
     attributeName: {
       query: gql`
@@ -105,16 +105,16 @@ export default {
         if (!loading) {
           this.attributeTranslation = data.productType.attributeDefinitions.results.reduce(
             (result, item) => result.set(item.name, item.label),
-            new Map()
+            new Map(),
           );
         }
       },
       variables() {
         return {
-          locale: "EN-US",
-          type: "main"
+          locale: 'EN-US',
+          type: 'main',
         };
-      }
-    }
-  }
+      },
+    },
+  },
 };

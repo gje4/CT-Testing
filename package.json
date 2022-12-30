@@ -70,7 +70,7 @@
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
     "selectboxit": "^3.8.2",
-    "vue-cli-plugin-i18n": "^0.6.0",
+    "vue-cli-plugin-i18n": "^2.3.1",
     "vue-cli-plugin-yaml": "^1.0.1",
     "vue-template-compiler": "^2.6.10"
   },
